@@ -3,9 +3,7 @@
 function renderGenreItems(genres) {
   const ulGenreList = document.querySelector(".genres__list");
 
-  for (let i = 0; i < genres.length; i++) {
-    const currentGenre = genres[i];
-
+  genres.forEach((currentGenre) => {
     const liGenre = document.createElement("li");
     liGenre.innerText = currentGenre;
     liGenre.classList.add("genre__item", "text3");
@@ -13,7 +11,7 @@ function renderGenreItems(genres) {
       liGenre.classList.add("active");
     }
     ulGenreList.appendChild(liGenre);
-  }
+  });
 }
 
 function createAlbumCard(albumData) {
@@ -79,34 +77,29 @@ function renderAlbumCards(albums) {
   const ulAlbumList = document.querySelector(".albums__list");
   ulAlbumList.innerHTML = "";
 
-  for (let i = 0; i < albums.length; i++) {
-    const currentAlbum = albums[i];
+  albums.forEach((currentAlbum) => {
     const albumCard = createAlbumCard(currentAlbum);
     ulAlbumList.appendChild(albumCard);
-  }
+  });
 }
 
 function handleFilter(albums, genreFilter = "Todos", priceFilter) {
   const filteredAlbums = [];
 
-  for (let i = 0; i < albums.length; i++) {
-    const currentAlbum = albums[i];
+  albums.forEach((currentAlbum) => {
     if (
       (currentAlbum.genre === genreFilter || genreFilter === "Todos") &&
       currentAlbum.price <= priceFilter
     ) {
       filteredAlbums.push(currentAlbum);
     }
-  }
+  });
 
   return filteredAlbums;
 }
 
 function removeActiveClass(genres) {
-  for (let i = 0; i < genres.length; i++) {
-    const genre = genres[i];
-    genre.classList.remove("active");
-  }
+  genres.forEach((genre) => genre.classList.remove("active"));
 }
 
 function handleFilterEvents(albums) {
@@ -117,9 +110,8 @@ function handleFilterEvents(albums) {
   let genreCategory = "Todos";
   let priceValue = inputPriceRange.valueAsNumber;
 
-  for (let i = 0; i < genres.length; i++) {
-    const currentGenre = genres[i];
-    currentGenre.addEventListener("click", function (event) {
+  genres.forEach((currentGenre) => {
+    currentGenre.addEventListener("click", (event) => {
       removeActiveClass(genres);
       currentGenre.classList.add("active");
       genreCategory = event.target.innerText;
@@ -127,7 +119,7 @@ function handleFilterEvents(albums) {
       const albumsToRender = handleFilter(albums, genreCategory, priceValue);
       renderAlbumCards(albumsToRender);
     });
-  }
+  });
 
   inputPriceRange.addEventListener("input", function (event) {
     priceValue = event.target.value;
